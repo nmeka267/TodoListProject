@@ -14,10 +14,26 @@ export default class App extends Component {
     editItem: false
   };
   handleChange = e => {
-    console.log("handle change");
+    this.setState({
+      item: e.target.value
+    });
   };
   handleSubmit = e => {
-    console.log("handle Submit");
+    e.preventDefault();
+    const newItem = {
+      id: this.state.id,
+      title: this.state.item
+    };
+    const updateItems = [...this.state.items, newItem];
+    this.setState(
+      {
+        items: updateItems,
+        item: "",
+        id: uuid(),
+        editItem: false
+      },
+      () => console.log(this.state)
+    );
   };
   clearList = e => {
     console.log("handle List");
@@ -38,7 +54,7 @@ export default class App extends Component {
             <h3 className="text-capitalize text-center">todo input</h3>
             <TodoInput
               item={this.state.item}
-              handleChange={this.state.item}
+              handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
               editItem={this.state.editItem}
             />
